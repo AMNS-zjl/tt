@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱你😘</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* 防止页面滚动 */
+        }
+        body {
+            background-color: pink;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff69b4;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #ff1493;
+            transform: translateY(-2px);
+        }
+        .button:active {
+            background-color: #ff1493;
+            transform: translateY(0);
+        }
+        #leftButton {
+            transition: all 0.3s ease;
+        }
+        .image-container {
+            position: absolute;
+            top: 100px; /* 调整这个值来改变图片的位置 */
+            transition: transform 0.3s ease;
+        }
+        .gif-container {
+            display: none;
+            position: absolute;
+            top: 100px;
+            left: 300px; /* 调整这个值来改变动图的位置 */
+        }
+        .heart {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            transform: rotate(-45deg); /* 向左旋转 90 度 */
+            animation: fall 5s infinite;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -25px;
+            left: 0;
+        }
+        .heart::after {
+            left: 25px;
+            top: 0;
+        }
+        @keyframes fall {
+            0% {
+                top: -50px;
+                opacity: 1;
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="backgroundMusic" src="E:\网页\表白Time To Love.mp3" loop></audio>
+    <div class="image-container">
+        <img id="image" src="https://tse2-mm.cn.bing.net/th/id/OIP-C.-kS6RhlWX3l5IYyvCG5lWgAAAA?rs=1&pid=ImgDetMain" alt="示例图片" width="200">
+    </div>
+    <div class="gif-container">
+        <img id="gif" src="https://s1.aigei.com/src/img/gif/69/69cf2ab2864c4ea485f395c744353ede.gif?imageMogr2/auto-orient/thumbnail/!133x132r/gravity/Center/crop/133x132/quality/85/%7CimageView2/2/w/133&e=2051020800&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:-snwDjKWZht1c_GUJw4WEIUfC6A=" alt="动图" width="200">
+    </div>
+    <div class="container">
+        <button id="leftButton" class="button">接受</button>
+        <button id="rightButton" class="button">不好</button>
+    </div>
+
+    <script>
+        const leftButton = document.getElementById('leftButton');
+        const rightButton = document.getElementById('rightButton');
+        const image = document.getElementById('image');
+        const container = document.querySelector('.container');
+        const gifContainer = document.querySelector('.gif-container');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+
+        rightButton.addEventListener('click', () => {
+            const currentWidth = parseFloat(window.getComputedStyle(leftButton).width);
+            leftButton.style.width = (currentWidth + 50) + 'px';
+        });
+
+        leftButton.addEventListener('click', () => {
+            // 更新图片
+            image.src = 'https://ts1.cn.mm.bing.net/th/id/R-C.8c6d6bac16bd8633d41d63fa6dbf81a7?rik=mdS5rVTlj4A8jg&riu=http%3a%2f%2fimg.wxcha.com%2ffile%2f201809%2f29%2f33f154ea24.jpg&ehk=X4MJQejdH4IbRU4jD7SJqKRQglxIk9nIUA%2bbvFYzjgc%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1'; // 替换为你想要的图片路径
+            
+            // 隐藏按钮
+            container.style.display = 'none';
+            
+            // 放大图片
+            image.style.transform = 'scale(2)';
+            
+            // 显示动图
+            gifContainer.style.display = 'block';
+
+            // 生成多个爱心
+            setInterval(createHeart, 500);
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // 自动播放背景音乐
+        window.addEventListener('load', () => {
+            backgroundMusic.play();
+        });
+    </script>
+</body>
+</html>
